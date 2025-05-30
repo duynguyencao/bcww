@@ -1,0 +1,42 @@
+.user-detail {
+    padding: 1rem;
+}
+
+.user-detail h2 {
+    color: #333;
+    margin: 20px 0;
+    font-size: 2rem;
+}
+
+.user-info {
+    margin-bottom: 2rem;
+}
+
+.user-info p {
+    margin: 10px 0;
+    color: #666;
+}
+
+.user-info strong {
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+.view-photos-button {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.view-photos-button:hover {
+    background-color: #0056b3;
+}
+
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+}
