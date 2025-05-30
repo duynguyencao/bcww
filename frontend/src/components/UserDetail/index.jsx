@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./styles.css";
 import fetchModel from "../../lib/fetchModelData";
-import TopBar from "../TopBar";
+
 
 /**
  * Define UserDetail, a React component of Project 4.
@@ -13,7 +13,9 @@ const UserDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchModel(`/api/user/${userId}`).then(setUser);
+    fetchModel(`/api/user/${userId}`,{
+      credentials: "include",
+    }).then(setUser);
   }, [userId]);
 
   if (!user) {

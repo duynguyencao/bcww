@@ -18,6 +18,7 @@ function LoginRegister({ onLogin }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(login),
+          credentials: "include",
         }
       );
       if (!response.ok) {
@@ -34,30 +35,38 @@ function LoginRegister({ onLogin }) {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-        const res = await fetch("http://localhost:8081/api/user/admin/register",{
-            method:"POST",
+      const res = await fetch("http://localhost:8081/api/user/admin/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(register),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        setRegisterError("failed");
+      } else {
+        const loginRes = await fetch(
+          `http://localhost:8081/api/user/admin/login`,
+          {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json",
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(register),
-        })
-        if (!res.ok){
-            setRegisterError("failed");
-        }else{
-            const loginRes = await fetch(`http://localhost:8081/api/user/admin/login`,{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({login_name: register.login_name, password: register.password})
-            })
-            if (loginRes.ok){
-                const user = await loginRes.json();
-                onLogin(user);
-            }
+            body: JSON.stringify({
+              login_name: register.login_name,
+              password: register.password,
+            }),
+            credentials: "include",
+          }
+        );
+        if (loginRes.ok) {
+          const user = await loginRes.json();
+          onLogin(user);
         }
-    }catch ( err ){
-        setRegisterError("falied");
+      }
+    } catch (err) {
+      setRegisterError("falied");
     }
   };
 
@@ -84,32 +93,72 @@ function LoginRegister({ onLogin }) {
       <h2>register</h2>
       <form onSubmit={handleRegister}>
         <div>
-            <label>login name</label>
-            <input type="text" onChange={e => setRegister({...register, login_name: e.target.value})} required/>
+          <label>login name</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, login_name: e.target.value })
+            }
+            required
+          />
         </div>
         <div>
-            <label>password</label>
-            <input type="text" onChange={e => setRegister({...register, password: e.target.value})} required/>
+          <label>password</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, password: e.target.value })
+            }
+            required
+          />
         </div>
         <div>
-            <label>first name</label>
-            <input type="text" onChange={e => setRegister({...register, first_name: e.target.value})} required/>
+          <label>first name</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, first_name: e.target.value })
+            }
+            required
+          />
         </div>
         <div>
-            <label>last name</label>
-            <input type="text" onChange={e => setRegister({...register, last_name: e.target.value})} required/>
+          <label>last name</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, last_name: e.target.value })
+            }
+            required
+          />
         </div>
         <div>
-            <label>location</label>
-            <input type="text" onChange={e => setRegister({...register, location: e.target.value})} />
+          <label>location</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, location: e.target.value })
+            }
+          />
         </div>
         <div>
-            <label>description</label>
-            <input type="text" onChange={e => setRegister({...register, description: e.target.value})}/>
+          <label>description</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, description: e.target.value })
+            }
+          />
         </div>
         <div>
-            <label>occupation</label>
-            <input type="text" onChange={e => setRegister({...register, occupation: e.target.value})} required/>
+          <label>occupation</label>
+          <input
+            type="text"
+            onChange={(e) =>
+              setRegister({ ...register, occupation: e.target.value })
+            }
+            required
+          />
         </div>
         <button type="submit">register</button>
       </form>

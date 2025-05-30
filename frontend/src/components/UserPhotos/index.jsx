@@ -12,10 +12,14 @@ const UserPhotos = ({ user: currentUser }) => {
   const { userId } = useParams();
 
   useEffect(() => {
-    fetchModel(`/api/photo/photosOfUser/${userId}`).then((data) => {
+    fetchModel(`/api/photo/photosOfUser/${userId}`,{
+      credentials: "include",
+    }).then((data) => {
       setPhotos(Array.isArray(data) ? data : []);
     });
-    fetchModel(`/api/user/${userId}`).then(setUser);
+    fetchModel(`/api/user/${userId}`,{
+      credentials: "include",
+    }).then(setUser);
   }, [userId]);
 
   const handleInputChange = (photoId, value) => {
@@ -30,6 +34,7 @@ const UserPhotos = ({ user: currentUser }) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ comment, user_id: currentUser._id }),
+      credentials: "include",
     });
     fetchModel(`/api/photo/photosOfUser/${userId}`).then(setPhotos);
     setComments((prev) => ({ ...prev, [photoId]: "" }));
@@ -52,6 +57,7 @@ const UserPhotos = ({ user: currentUser }) => {
       const res = await fetch("http://localhost:8081/api/photo/photos/new", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
       if (!res.ok) {
         const data = await res.json();

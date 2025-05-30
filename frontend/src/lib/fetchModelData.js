@@ -4,10 +4,9 @@
  * @param {string} url      The URL to issue the GET request.
  *
  */
-function fetchModel(url) {
-    return fetch("http://localhost:8081" + url).then((response) =>
-        response.json()
-    );
+function fetchModel(url, options = {}) {
+    return fetch("http://localhost:8081" + url, { credentials: "include", ...options })
+        .then((response) => response.json());
 }
 
 export default fetchModel;

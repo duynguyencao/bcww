@@ -18,18 +18,13 @@ const AppLayout = () => {
     setUser(null);
   };
 
-  if (!user) {
-    return (
-      <LoginRegister
-        onLogin={handleLogin}
-      />
-    );
-  }
-
   return (
     <div>
       <TopBar user={user} onLogout={handleLogout} />
-      <div className="main">
+      {!user ? (
+        <LoginRegister onLogin={handleLogin} />
+      ) : (
+        <div className="main">
         <div className="sidebar">
           <UserList />
         </div>
@@ -49,6 +44,7 @@ const AppLayout = () => {
           </Routes>
         </div>
       </div>
+      )} 
     </div>
   );
 };

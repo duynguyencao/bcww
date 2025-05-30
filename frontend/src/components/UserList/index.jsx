@@ -11,7 +11,9 @@ const UserList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchModel("/api/user/list").then(setUsers);
+    fetchModel("/api/user/list",{
+      credentials: "include",
+    }).then(data => setUsers(Array.isArray(data) ? data : []));
   }, []);
 
   return (
